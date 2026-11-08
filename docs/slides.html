@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order Support Agent</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --text: #15141a;
+    --muted: #5d5a66;
+    --accent: #e8590c;
+    --border: #dddbd5;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+  }
+  .deck {
+    position: relative;
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 5% 6% 4%;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+  }
+  .slide.active { visibility: visible; }
+  .label {
+    color: var(--accent);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+  }
+  h1 {
+    font-size: 52px;
+    line-height: 1.15;
+    margin: 0;
+    max-width: 22ch;
+  }
+  ul { margin: 0; padding-left: 1.1em; }
+  li {
+    font-size: 30px;
+    line-height: 1.35;
+    margin: 0 0 16px;
+    color: var(--muted);
+  }
+  li strong { color: var(--text); }
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .diagram {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+  }
+  .diagram svg { max-height: 52vh; }
+  .fallback {
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--muted);
+    text-align: left;
+  }
+  .diagram:has(svg) .fallback { display: none; }
+  .center { text-align: center; align-items: center; }
+  .center h1 { font-size: 80px; max-width: none; }
+  .center p { font-size: 32px; color: var(--muted); margin: 0; }
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .app { font-weight: 700; color: var(--text); }
+  .progress span { margin-left: 18px; }
+  .progress .on { color: var(--accent); font-weight: 700; }
+  .counter {
+    position: fixed;
+    right: 16px;
+    bottom: 10px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <section class="slide active">
+    <div class="label">The problem</div>
+    <div class="body">
+      <h1>Your team spends hours answering "where is my order?"</h1>
+      <ul>
+        <li>The same lookup, done by hand, again and again</li>
+        <li>Customers wait in a queue for a one-line answer</li>
+        <li>Doing nothing means growing support costs as orders grow</li>
+      </ul>
+    </div>
+    <footer><span class="app">Order Support Agent</span><span class="progress"><span class="on">Problem</span><span>Solution</span><span>What I built</span><span>Next steps</span></span></footer>
+  </section>
+
+  <section class="slide">
+    <div class="label">Our solution</div>
+    <div class="body">
+      <h1>An assistant that checks your order records so customers get answers instantly</h1>
+      <ul>
+        <li><strong>Faster:</strong> replies in seconds, at any hour</li>
+        <li><strong>Cheaper:</strong> for example, 300 questions a day × 3 minutes = about 15 staff hours a day</li>
+        <li><strong>Consistent:</strong> every answer comes from the record, not memory</li>
+      </ul>
+    </div>
+    <footer><span class="app">Order Support Agent</span><span class="progress"><span>Problem</span><span class="on">Solution</span><span>What I built</span><span>Next steps</span></span></footer>
+  </section>
+
+  <section class="slide">
+    <div class="label">What I built</div>
+    <div class="body">
+      <h1>Let me show you</h1>
+      <div class="split">
+        <ul>
+          <li>Answers order questions in plain English</li>
+          <li>Looks up orders by ID or by customer email</li>
+          <li>Shows every lookup it made, and says so when an order doesn't exist</li>
+        </ul>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+  A["Customer asks a question"] --> B["Mistral Small picks a lookup"]
+  B --> C["Our code checks the order records"]
+  C -->|"result"| B
+  B --> D["Mistral Small writes the answer"]
+  D --> E["Reply shown, with each lookup listed"]
+          </pre>
+          <div class="fallback">
+            1. Customer asks a question<br>
+            2. Mistral Small picks a lookup<br>
+            3. Our code checks the order records (repeats if needed)<br>
+            4. Mistral Small writes the answer<br>
+            5. Reply shown, with each lookup listed
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer><span class="app">Order Support Agent</span><span class="progress"><span>Problem</span><span>Solution</span><span class="on">What I built</span><span>Next steps</span></span></footer>
+  </section>
+
+  <section class="slide">
+    <div class="label">Next steps</div>
+    <div class="body">
+      <h1>From demo to pilot</h1>
+      <ul>
+        <li><strong>Today:</strong> sample orders only, and it doesn't verify who is asking</li>
+        <li><strong>Production:</strong> connect your order system, verify customers, measure accuracy, cap costs</li>
+        <li><strong>The ask:</strong> a 3-week pilot on your real order data</li>
+      </ul>
+    </div>
+    <footer><span class="app">Order Support Agent</span><span class="progress"><span>Problem</span><span>Solution</span><span>What I built</span><span class="on">Next steps</span></span></footer>
+  </section>
+
+  <section class="slide">
+    <div class="label">Thank you</div>
+    <div class="body center">
+      <h1>Thank you</h1>
+      <p>Instant, accurate order answers, so your team can focus on the hard cases.</p>
+      <p><strong>Questions?</strong></p>
+    </div>
+    <footer><span class="app">Order Support Agent</span><span class="progress"><span>Problem</span><span>Solution</span><span>What I built</span><span>Next steps</span></span></footer>
+  </section>
+
+</div>
+<div class="counter" id="counter"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true } });
+  }
+
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  function show(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === current));
+    counter.textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); show(current + 1); }
+    if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); show(current - 1); }
+  });
+
+  show(0);
+</script>
+</body>
+</html>
